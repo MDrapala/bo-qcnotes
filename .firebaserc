@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "qcnotes-6baac"
+  },
+  "targets": {
+    "qcnotes-6baac": {
+      "hosting": {
+        "default": [
+          "qcnotes-6baac"
+        ]
+      }
+    }
+  }
+}

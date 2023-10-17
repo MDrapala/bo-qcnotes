@@ -1,0 +1,38 @@
+name: Deploy to Firebase Hosting on push master
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build_and_preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - run: yarn
+      - run: yarn build
+        env:
+          NEXT_PUBLIC_FBASE_KEY: "${{ secrets.NEXT_PUBLIC_FBASE_KEY }}"
+          NEXT_PUBLIC_FBASE_PROJECT_ID: qcnotes-6baac
+          NEXT_PUBLIC_FBASE_MESSAGING_SENDER_ID: "${{ secrets.NEXT_PUBLIC_FBASE_MESSAGING_SENDER_ID }}"
+          NEXT_PUBLIC_FBASE_APP_ID: "${{ secrets.NEXT_PUBLIC_FBASE_APP_ID }}"
+          NEXT_PUBLIC_FBASE_MEASUREMENT_ID: "${{ secrets.NEXT_PUBLIC_FBASE_MEASUREMENT_ID }}"
+      - run: yarn export
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_QCNOTES_PROD}}"
+          projectId: qcnotes-6baac
+          channelId: live
+          target: default
+        env:
+          FIREBASE_CLI_PREVIEWS: hostingchannels
