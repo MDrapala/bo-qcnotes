@@ -42,7 +42,7 @@ const StudentsPage = () => {
 
   const loadStudent = async () => {
     const userList = await getUserList(20)
-    console.log({ userList })
+
     setStudentList(userList)
   }
 

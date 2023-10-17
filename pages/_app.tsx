@@ -25,7 +25,6 @@ const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, async (currentUser) => {
       if (!currentUser) return router.push("/auth")
-      console.log(currentUser.uid)
       const right = await getAdminByUid(currentUser.uid)
       if (!right) {
         dispatch(revokeSession())
