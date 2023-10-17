@@ -17,6 +17,8 @@
     "baseUrl": "./",
     "paths": {
       "@/lib/*": ["lib/*"],
+      "@/pages/*": ["pages/*"],
+      "@/styles/*": ["styles/*"],
       "@/components/*": ["components/*"]
     },
     "incremental": true
