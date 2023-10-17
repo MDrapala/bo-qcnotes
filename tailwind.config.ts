@@ -1,20 +1,30 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss"
+
+const qcmColors = {
+  primary: "#3498db", // Couleur principale
+  secondary: "#f39c12", // Couleur secondaire
+  background: "#f2f2f2", // Couleur de fond
+  text: "#333333", // Couleur du texte principal
+  textSecondary: "#777777", // Couleur du texte secondaire
+  success: "#27ae60", // Couleur de succès
+  error: "#e74c3c" // Couleur d'erreur
+}
 
 const config: Config = {
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ["./**/**/*.{ts,tsx}"],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
-    },
+      colors: {
+        primary: qcmColors.primary,
+        secondary: qcmColors.secondary,
+        background: qcmColors.background,
+        text: qcmColors.text,
+        "text-secondary": qcmColors.textSecondary,
+        success: qcmColors.success,
+        error: qcmColors.error
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 }
 export default config

@@ -6,10 +6,10 @@ const nextConfig = {
   /* config options here */
   images: {
     loader: "akamai",
-    path: "https://qcnotes-6baac.web.app",
+    path: "https://bo-qcnotes.web.app",
     domains: [
-      "https://qcnotes-6baac.web.app",
-      "https://www.qcnotes-6baac.web.app",
+      "https://bo-qcnotes.web.app",
+      "https://www.bo-qcnotes.web.app",
       "http://localhost:3000"
     ]
   },
