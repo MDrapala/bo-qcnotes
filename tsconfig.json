@@ -14,15 +14,19 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "downlevelIteration": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@/lib/*": ["lib/*"],
-      "@/pages/*": ["pages/*"],
-      "@/styles/*": ["styles/*"],
-      "@/components/*": ["components/*"]
+      "@/*": ["./*"]
     },
     "incremental": true
   },
-  "exclude": ["node_modules", "**/*.stories.tsx"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "exclude": ["node_modules"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/**/*.ts",
+    "**/**/*.tsx",
+    "jest.config.ts"
+  ]
 }
