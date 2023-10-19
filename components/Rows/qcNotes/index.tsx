@@ -2,13 +2,14 @@ import Trash from "@/assets/icons/Trash"
 import { useRouter } from "next/router"
 import { Fragment } from "react"
 
-const ClassesRows = ({ item }: { item: any }) => {
+const QCNotesRows = ({ item }: { item: any }) => {
   const router = useRouter()
+
   return (
     <Fragment>
       <tr
         className="border-b-2 border-neutral-50 hover:bg-gray-50 cursor-pointer"
-        onClick={() => router.push(`/qcnotes/${item?.id}`)}
+        onClick={() => router.push(`/classes/${item?.id}`)}
       >
         <td className="items-center gap-4 py-5 first:pl-7">
           <div className="flex flex-col">
@@ -17,15 +18,12 @@ const ClassesRows = ({ item }: { item: any }) => {
         </td>
         <td className="items-center gap-4 py-5">
           <div className="flex flex-col">
-            <p className="font-semibold  text-neutral-base">{item?.title}</p>
+            <p className="font-semibold  text-neutral-base">{item.name}</p>
           </div>
         </td>
         <td className="items-center gap-4 py-5">
           <div className="flex flex-col">
-            <p className="font-semibold  text-neutral-base">
-              {" "}
-              {item?.questions.length}
-            </p>
+            <p className="font-semibold  text-neutral-base">{item.code}</p>
           </div>
         </td>
         <td className="items-center gap-4 py-5">
@@ -40,4 +38,4 @@ const ClassesRows = ({ item }: { item: any }) => {
   )
 }
 
-export default ClassesRows
+export default QCNotesRows

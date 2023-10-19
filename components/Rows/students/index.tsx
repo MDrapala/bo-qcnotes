@@ -23,7 +23,7 @@ const ClasseStudentRows = ({ item }: { item: any }) => {
         </td>
         <td className="items-center gap-4 py-5">
           <div className="flex flex-col">
-            <p className="font-semibold  text-neutral-base"></p>
+            <p className="font-semibold  text-neutral-base">{item.code}</p>
           </div>
         </td>
         <td className="items-center gap-4 py-5">

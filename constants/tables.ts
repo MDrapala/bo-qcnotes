@@ -11,3 +11,10 @@ export const HEADER_CLASSES_STUDENTS_ROW = [
   { title: "Code" },
   { title: "" }
 ]
+
+export const HEADER_QCNOTES_ROW = [
+  { title: "ID" },
+  { title: "Title" },
+  { title: "Nombre de questions" },
+  { title: "" }
+]

@@ -1,8 +1,7 @@
 import { Menu } from "@/types/Default"
-import Setting from "@/assets/icons/Setting"
-import School from "@/assets/icons/School"
 import Stat from "@/assets/icons/Stat"
 import Organization from "@/assets/icons/Organization"
+import Ad from "@/assets/icons/Ad"
 
 export const AdminMenu: Array<Menu> = [
   {
@@ -21,19 +20,11 @@ export const AdminMenu: Array<Menu> = [
       count: 0
     }
   },
-  {
-    name: "Signin Students",
-    link: "/students",
-    icon: <School variant="large" />,
-    notification: {
-      count: 0
-    }
-  },
 
   {
-    name: "Settings",
-    link: "/settings/members?search=All%20Members",
-    icon: <Setting variant="large" />,
+    name: "QC notes",
+    link: "/qcnotes",
+    icon: <Ad variant="large" />,
     notification: {
       count: 0
     }

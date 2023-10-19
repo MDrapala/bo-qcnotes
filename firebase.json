@@ -26,8 +26,16 @@
         "destination": "/classes.html"
       },
       {
-        "source": "/classes/:classId",
+        "source": "/classes/:id",
         "destination": "/classes/*.html"
+      },
+      {
+        "source": "/qcnotes",
+        "destination": "/qcnotes.html"
+      },
+      {
+        "source": "/qcnotes/:id",
+        "destination": "/qcnotes/*.html"
       },
       {
         "source": "**",
