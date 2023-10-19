@@ -14,12 +14,20 @@
         "destination": "/404.html"
       },
       {
-        "source": "/auth/signin",
-        "destination": "/auth/signin.html"
+        "source": "/auth",
+        "destination": "/auth.html"
       },
       {
-        "source": "/auth/signup",
-        "destination": "/auth/signup.html"
+        "source": "/dashboard",
+        "destination": "/dashboard.html"
+      },
+      {
+        "source": "/classes",
+        "destination": "/classes.html"
+      },
+      {
+        "source": "/classes/:classId",
+        "destination": "/classes/*.html"
       },
       {
         "source": "**",

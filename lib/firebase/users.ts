@@ -1,6 +1,6 @@
 import { firestore } from "@/config/firebase"
 import { DB_USERS } from "@/constants/firebase"
-import { doc, getDocs, query } from "firebase/firestore"
+import { doc, getDocs, query, where } from "firebase/firestore"
 import {
   setDoc,
   DocumentSnapshot,
@@ -14,6 +14,17 @@ export const getUserByUid = async (uid: string) => {
   try {
     const user: DocumentSnapshot = await getDoc(doc(firestore, DB_USERS, uid))
     return user.data()
+  } catch (error) {
+    console.error
+  }
+}
+
+export const getUserByEmail = async (email: string) => {
+  try {
+    const user: any = await getDocs(
+      query(collection(firestore, DB_USERS), where("email", "==", email))
+    )
+    return user.docs[0].data()
   } catch (error) {
     console.error
   }

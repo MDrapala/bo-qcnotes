@@ -7,11 +7,14 @@ const HomePage = () => {
 
   const signInWithGoogle = async () => {
     const login = await Signin()
-    if (!login.isLogin) {
+    if (!login?.uid) {
       toastNotification(login.message as string, {
         type: "error"
       })
     } else {
+      toastNotification(login.message as string, {
+        type: "success"
+      })
       router.push("/dashboard")
     }
   }

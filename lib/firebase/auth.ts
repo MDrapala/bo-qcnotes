@@ -5,7 +5,6 @@ import { auth } from "@/config/firebase"
 const provider = new GoogleAuthProvider()
 
 interface FirebaseLogin {
-  isLogin: boolean
   uid?: string
   email?: string
   message?: string
@@ -18,24 +17,24 @@ export const Signin = async (): Promise<FirebaseLogin> => {
         return { isLogin: false, message: error.message }
       }
     )
-
-    const email = userCred.user.email
-    const uid = userCred.user.uid
-
-    if (email) {
+    if (!userCred._tokenResponse?.isNewUser) {
       return {
-        isLogin: true,
-        uid,
-        email,
-        message: `Success Hello ${email}`
+        uid: userCred.user.uid,
+        email: userCred.user.email,
+        message: `Success Hello ${userCred.user.email}`
       }
+    } else {
+      if (auth.currentUser) {
+        await auth.currentUser.delete()
+        return { message: "L'utilisateur n'a pas les droits" }
+      }
+      return { message: "L'utilisateur n'a pas les droits" }
     }
-    return { isLogin: false }
   } catch (error) {
     if (error instanceof Error) {
-      return { isLogin: false, message: error.message }
+      return { message: error.message }
     } else {
-      return { isLogin: false, message: `Unexpected error, ${error}` }
+      return { message: `Unexpected error, ${error}` }
     }
   }
 }

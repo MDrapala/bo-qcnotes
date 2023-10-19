@@ -28,7 +28,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       const right = await getAdminByUid(currentUser.uid)
       if (!right) {
         dispatch(revokeSession())
-        router.push("/")
+        router.push("/dashboard")
         return
       }
       dispatch(
