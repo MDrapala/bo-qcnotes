@@ -36,6 +36,8 @@ const QCNotesDetails = () => {
     reset(qcNotes)
   }, [qcNotes])
 
+  console.log(qcNotes)
+
   return qcNotes ? (
     <Layout props={metadata}>
       <div className="w-full md:mx-12">
@@ -49,9 +51,11 @@ const QCNotesDetails = () => {
           />
         </div>
         <div className="bg-white border rounded-lg px-8 py-6 mx-auto my-8 w-full">
-          <h2 className="text-2xl font-medium mb-4">{qcNotes.title}</h2>
-          {getValues()?.questions?.map((question: any, key: number) => (
-            <div key={key} className="mb-4">
+          <h2 className="text-2xl font-medium mb-4">
+            {qcNotes.title} ; Note sur {qcNotes.note}
+          </h2>
+          {getValues()?.questions?.map((question: any, keyQues: number) => (
+            <div key={keyQues} className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">
                 {question.question}
               </label>
@@ -71,11 +75,10 @@ const QCNotesDetails = () => {
                         onChange={(e) => {
                           const newIsValidate = e.target.checked
                           {
-                            setValue(`questions.reponses[${keyRep}]`, {
-                              name: response.name,
-                              isValidate: newIsValidate
-                            })
-                            reset(getValues())
+                            setValue(
+                              `questions[${keyQues}].reponses[${keyRep}].isValidate`,
+                              newIsValidate
+                            )
                           }
                         }}
                       />
