@@ -9,7 +9,7 @@ const QCNotesRows = ({ item }: { item: any }) => {
     <Fragment>
       <tr
         className="border-b-2 border-neutral-50 hover:bg-gray-50 cursor-pointer"
-        onClick={() => router.push(`/classes/${item?.id}`)}
+        onClick={() => router.push(`/qcnotes/${item?.id}`)}
       >
         <td className="items-center gap-4 py-5 first:pl-7">
           <div className="flex flex-col">
@@ -18,12 +18,14 @@ const QCNotesRows = ({ item }: { item: any }) => {
         </td>
         <td className="items-center gap-4 py-5">
           <div className="flex flex-col">
-            <p className="font-semibold  text-neutral-base">{item.name}</p>
+            <p className="font-semibold  text-neutral-base">{item.title}</p>
           </div>
         </td>
         <td className="items-center gap-4 py-5">
           <div className="flex flex-col">
-            <p className="font-semibold  text-neutral-base">{item.code}</p>
+            <p className="font-semibold  text-neutral-base">
+              {item?.questions.length}
+            </p>
           </div>
         </td>
         <td className="items-center gap-4 py-5">
