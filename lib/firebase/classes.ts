@@ -1,6 +1,6 @@
 import { firestore } from "@/config/firebase"
 import { DB_CLASSES, DB_USERS } from "@/constants/firebase"
-import { doc, getDocs, query, where } from "firebase/firestore"
+import { addDoc, doc, getDocs, query, setDoc, where } from "firebase/firestore"
 import {
   DocumentSnapshot,
   getDoc,
@@ -56,15 +56,25 @@ const getStudentsByClass = async (id: string) => {
   }
 }
 
-// export const updateUser = async (
-//   id: string,
-//   data: object
-// ): Promise<boolean> => {
-//   try {
-//     await setDoc(doc(firestore, DB_USERS, id), data, { merge: true })
-//     return true
-//   } catch (error) {
-//     console.error({ error })
-//     return false
-//   }
-// }
+export const addClasse = async (data: object) => {
+  try {
+    await addDoc(collection(firestore, DB_CLASSES), data)
+    return true
+  } catch (error) {
+    console.error({ error })
+    return false
+  }
+}
+
+export const updateClasse = async (
+  id: string,
+  data: object
+): Promise<boolean> => {
+  try {
+    await setDoc(doc(firestore, DB_CLASSES, id), data, { merge: true })
+    return true
+  } catch (error) {
+    console.error({ error })
+    return false
+  }
+}

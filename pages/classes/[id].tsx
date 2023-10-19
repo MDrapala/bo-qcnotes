@@ -12,7 +12,7 @@ import { getClasseById } from "@/lib/firebase/classes"
 import ClasseStudentRows from "@/components/Rows/students"
 import Table from "@/components/Tables"
 import { HEADER_CLASSES_STUDENTS_ROW } from "@/constants/tables"
-import { updateUser } from "@/lib/firebase/users"
+import { addUser } from "@/lib/firebase/users"
 
 const ClassDetailsPage = () => {
   const router = useRouter()
@@ -50,7 +50,7 @@ const ClassDetailsPage = () => {
   }
 
   const onSubmit = async (data: any) => {
-    const addStudent = await updateUser(userCode, {
+    const addStudent = await addUser({
       ...data,
       code: userCode,
       class_id: classId,

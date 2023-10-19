@@ -1,6 +1,6 @@
 import { firestore } from "@/config/firebase"
 import { DB_USERS } from "@/constants/firebase"
-import { doc, getDocs, query, where } from "firebase/firestore"
+import { addDoc, doc, getDocs, query, where } from "firebase/firestore"
 import {
   setDoc,
   DocumentSnapshot,
@@ -48,6 +48,16 @@ export const getUserList = async (limits: number) => {
     return user
   } catch (error) {
     console.error
+  }
+}
+
+export const addUser = async (data: object) => {
+  try {
+    await addDoc(collection(firestore, DB_USERS), data)
+    return true
+  } catch (error) {
+    console.error({ error })
+    return false
   }
 }
 
