@@ -1,11 +1,12 @@
 import { Metadata } from "next"
-import Layout from ".."
-import BreadCrumbs from "@/components/BreadCrumb"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { getQCNotesById, updateQCNotesById } from "@/lib/firebase/qcNotes"
 import { useForm } from "react-hook-form"
+import { toastNotification } from "@/components/toast"
+import BreadCrumbs from "@/components/BreadCrumb"
 import Loading from "@/components/loading"
+import Layout from "@/pages"
 
 const metadata: Metadata = {
   title: "QC Notes"
@@ -24,7 +25,11 @@ const QCNotesDetails = () => {
 
   const onSubmit = async (data: any) => {
     const UpdateQCNotes = await updateQCNotesById(id as string, data)
-    console.log(UpdateQCNotes)
+    if (UpdateQCNotes) {
+      toastNotification(`Mise à jour réussie de ${qcNotes.title}`, {
+        type: "success"
+      })
+    }
     getQCNotesList(id as string)
   }
 
@@ -51,9 +56,7 @@ const QCNotesDetails = () => {
           />
         </div>
         <div className="bg-white border rounded-lg px-8 py-6 mx-auto my-8 w-full">
-          <h2 className="text-2xl font-medium mb-4">
-            {qcNotes.title} ; Note sur {qcNotes.note}
-          </h2>
+          <h2 className="text-2xl font-medium mb-4">{qcNotes.title}</h2>
           {getValues()?.questions?.map((question: any, keyQues: number) => (
             <div key={keyQues} className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">
@@ -89,13 +92,14 @@ const QCNotesDetails = () => {
               <hr />
             </div>
           ))}
-          <div>
+          <div className="flex justify-between items-center">
             <button
               onClick={handleSubmit(onSubmit)}
               className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
             >
               Mettre à jour
             </button>
+            <span className="text-xl">Note sur {qcNotes.note}</span>
           </div>
         </div>
       </div>
