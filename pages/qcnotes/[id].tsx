@@ -3,7 +3,7 @@ import Layout from ".."
 import BreadCrumbs from "@/components/BreadCrumb"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { getQCNotesById } from "@/lib/firebase/qcNotes"
+import { getQCNotesById, updateQCNotesById } from "@/lib/firebase/qcNotes"
 import { useForm } from "react-hook-form"
 import Loading from "@/components/loading"
 
@@ -23,7 +23,9 @@ const QCNotesDetails = () => {
   }
 
   const onSubmit = async (data: any) => {
-    console.log(data)
+    const UpdateQCNotes = await updateQCNotesById(id as string, data)
+    console.log(UpdateQCNotes)
+    getQCNotesList(id as string)
   }
 
   useEffect(() => {
@@ -35,8 +37,6 @@ const QCNotesDetails = () => {
   useEffect(() => {
     reset(qcNotes)
   }, [qcNotes])
-
-  console.log(qcNotes)
 
   return qcNotes ? (
     <Layout props={metadata}>
@@ -74,12 +74,11 @@ const QCNotesDetails = () => {
                         checked={response.isValidate}
                         onChange={(e) => {
                           const newIsValidate = e.target.checked
-                          {
-                            setValue(
-                              `questions[${keyQues}].reponses[${keyRep}].isValidate`,
-                              newIsValidate
-                            )
-                          }
+                          setValue(
+                            `questions[${keyQues}].reponses[${keyRep}].isValidate`,
+                            newIsValidate
+                          )
+                          reset(getValues())
                         }}
                       />
                       {response.name}
@@ -95,7 +94,7 @@ const QCNotesDetails = () => {
               onClick={handleSubmit(onSubmit)}
               className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
             >
-              Sauvegarder
+              Mettre à jour
             </button>
           </div>
         </div>

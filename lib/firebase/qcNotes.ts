@@ -51,7 +51,7 @@ export const addQCNotes = async (data: object) => {
   }
 }
 
-export const updateQCNotes = async (
+export const updateQCNotesById = async (
   id: string,
   data: object
 ): Promise<boolean> => {
