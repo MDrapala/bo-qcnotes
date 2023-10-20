@@ -55,36 +55,46 @@ const QCNotesDetails = () => {
             active={true}
           />
         </div>
-        <div className="bg-white border rounded-lg px-8 py-6 mx-auto my-8 w-full">
+        <div className="flex flex-col bg-white border rounded-lg px-8 py-6 mx-auto my-8 w-full">
           <h2 className="text-2xl font-medium mb-4">{qcNotes.title}</h2>
           {getValues()?.questions?.map((question: any, keyQues: number) => (
             <div key={keyQues} className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">
-                {question.question}
+                {question.question} /{" "}
+                <input
+                  type="number"
+                  placeholder="10"
+                  {...register(`questions[${keyQues}].points`, {
+                    valueAsNumber: true,
+                    required: true
+                  })}
+                  className="w-14 rounded-md border border-[#e0e0e0] bg-white py-1 px-2 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                />{" "}
+                points
               </label>
               <div className="flex flex-wrap -mx-2">
-                {question?.reponses?.map((response: any, keyRep: number) => (
+                {question?.answers?.map((response: any, keyRep: number) => (
                   <div key={keyRep} className="px-2 w-1/3">
                     <label
-                      htmlFor={`animal-${response.name}`}
+                      htmlFor={`animal-${response}`}
                       className="block text-gray-700 font-medium mb-2"
                     >
                       <input
                         type="checkbox"
-                        id={`animal-${response.name}`}
-                        value={response.name}
+                        id={`animal-${response}`}
+                        value={response}
                         className="mr-2"
-                        checked={response.isValidate}
+                        checked={question?.correctAnswers[keyRep]}
                         onChange={(e) => {
                           const newIsValidate = e.target.checked
                           setValue(
-                            `questions[${keyQues}].reponses[${keyRep}].isValidate`,
+                            `questions[${keyQues}].correctAnswers[${keyRep}]`,
                             newIsValidate
                           )
                           reset(getValues())
                         }}
                       />
-                      {response.name}
+                      {response}
                     </label>
                   </div>
                 ))}
@@ -99,7 +109,16 @@ const QCNotesDetails = () => {
             >
               Mettre à jour
             </button>
-            <span className="text-xl">Note sur {qcNotes.note}</span>
+            <span className="flex items-center gap-x-2 text-xl">
+              Note sur{" "}
+              <input
+                type="number"
+                id="note"
+                placeholder="10"
+                {...register("note", { valueAsNumber: true, required: true })}
+                className="w-14 rounded-md border border-[#e0e0e0] bg-white py-1 px-2 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+              />
+            </span>
           </div>
         </div>
       </div>

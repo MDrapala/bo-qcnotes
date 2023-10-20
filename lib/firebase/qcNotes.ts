@@ -43,8 +43,8 @@ export const getQCNotesList = async (limits: number) => {
 
 export const addQCNotes = async (data: object) => {
   try {
-    await addDoc(collection(firestore, DB_QCNOTES), data)
-    return true
+    const doc = await addDoc(collection(firestore, DB_QCNOTES), data)
+    return doc.id
   } catch (error) {
     console.error({ error })
     return false
