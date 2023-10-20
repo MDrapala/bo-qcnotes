@@ -7,12 +7,14 @@ import Table from "@/components/Tables"
 import { HEADER_QCNOTES_ROW } from "@/constants/tables"
 import { useEffect, useState } from "react"
 import { getQCNotesList } from "@/lib/firebase/qcNotes"
+import { useRouter } from "next/router"
 
 const metadata: Metadata = {
   title: "QC Notes"
 }
 
 const QCNotes = () => {
+  const router = useRouter()
   const [qcNotesList, setQCNotesList] = useState<any>([])
 
   const loadClasses = async () => {
@@ -35,7 +37,7 @@ const QCNotes = () => {
           <Button
             variant="default"
             className="bg-blue-400 hover:bg-blue-600"
-            onClick={() => alert(true)}
+            onClick={() => router.push("/qcnotes/create")}
           >
             Créer un QCNote
           </Button>
