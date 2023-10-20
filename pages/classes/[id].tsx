@@ -11,12 +11,23 @@ import { toastNotification } from "@/components/toast"
 import { getClasseById } from "@/lib/firebase/classes"
 import ClasseStudentRows from "@/components/Rows/students"
 import Table from "@/components/Tables"
-import { HEADER_CLASSES_STUDENTS_ROW } from "@/constants/tables"
+import {
+  HEADER_CLASSES_STUDENTS_ROW,
+  HEADER_QCNOTES_TESTS__ROW
+} from "@/constants/tables"
 import { addUser } from "@/lib/firebase/users"
+import ModalRender from "@/components/Modal"
+import QCNotesTests from "./modal/qcnotesTests"
+import { getQCNotesList } from "@/lib/firebase/qcNotes"
+import QCNotesTestRows from "@/components/Rows/qcNotesTests"
+import { getQCNotesTestList } from "@/lib/firebase/qcNotesTests"
 
 const ClassDetailsPage = () => {
   const router = useRouter()
   const classId = router.query.id as string
+  const [qcnotesList, setQCNotesList] = useState<any>([])
+  const [qcnotesTestList, setQCNotesTestList] = useState<any>([])
+  const [openModal, setOpenModal] = useState<boolean>(false)
   const [classe, setClasse] = useState<any>()
   const [userCode, setUserCode] = useState<string>("")
   const {
@@ -37,6 +48,14 @@ const ClassDetailsPage = () => {
   const getClasseList = async (classId: string) => {
     const classeList = await getClasseById(classId)
     setClasse(classeList)
+  }
+  const loadQCNotes = async () => {
+    const qcnotesList = await getQCNotesList(100)
+    setQCNotesList(qcnotesList)
+  }
+  const loadQCNotesTest = async () => {
+    const qcnotesList = await getQCNotesTestList(100)
+    setQCNotesTestList(qcnotesList)
   }
 
   const handleDeleteMedia = async () => {
@@ -67,9 +86,15 @@ const ClassDetailsPage = () => {
   }
 
   useEffect(() => {
+    loadQCNotes().catch((err) => console.error(err))
+    loadQCNotesTest().catch((err) => console.error(err))
     getClasseList(classId).catch((error: TypeError) => console.error(error))
     handleGenere()
   }, [classId])
+
+  // useEffect(() => {
+  //   loadQCNotesTest().catch((err) => console.error(err))
+  // }, [openModal])
 
   return classe ? (
     <LayoutPage props={metadata}>
@@ -170,7 +195,34 @@ const ClassDetailsPage = () => {
             </div>
           </div>
         </div>
+        <div className="mt-12 mb-12">
+          <div className="flex justify-end my-12 w-full">
+            <Button
+              variant="default"
+              className="bg-blue-400 hover:bg-blue-600"
+              onClick={() => setOpenModal(true)}
+            >
+              Nouveau QC Notes
+            </Button>
+          </div>
+          <Table
+            header={HEADER_QCNOTES_TESTS__ROW}
+            rows={QCNotesTestRows}
+            dataT={qcnotesTestList}
+          />
+        </div>
       </div>
+      <ModalRender
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        className="animate-in slide-in-from-bottom flex justify-center absolute top-[25%] lg:w-[calc(100%-1000px)] md:w-[calc(100%-400px)] sm:w-[calc(100%-200px)] xs:w-full left-[35%] py-3 max-h-[1000px] bg-white rounded-md shadow-lg"
+      >
+        <QCNotesTests
+          qcnotesList={qcnotesList}
+          classId={classId}
+          setOpenModal={setOpenModal}
+        />
+      </ModalRender>
     </LayoutPage>
   ) : (
     <Loading />

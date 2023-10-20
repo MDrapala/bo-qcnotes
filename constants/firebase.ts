@@ -18,4 +18,5 @@ export const FIREBASE_CONFIG = {
 export const DB_USERS = "users"
 export const DB_CLASSES = "classes"
 export const DB_QCNOTES = "qcnotes"
+export const DB_QCNOTES_TESTS = "qcnotes-tests"
 export const DB_ADMIN = "admins"

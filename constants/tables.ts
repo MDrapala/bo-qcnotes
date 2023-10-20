@@ -18,3 +18,10 @@ export const HEADER_QCNOTES_ROW = [
   { title: "Nombre de questions" },
   { title: "" }
 ]
+
+export const HEADER_QCNOTES_TESTS__ROW = [
+  { title: "ID" },
+  { title: "Date Start" },
+  { title: "ID QC Notes" },
+  { title: "" }
+]
