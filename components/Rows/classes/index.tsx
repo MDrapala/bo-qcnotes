@@ -9,7 +9,7 @@ const ClassesRows = ({ item }: { item: any }) => {
     <Fragment>
       <tr
         className="border-b-2 border-neutral-50 hover:bg-gray-50 cursor-pointer"
-        onClick={() => router.push(`/qcnotes/${item?.id}`)}
+        onClick={() => router.push(`/classes/${item?.id}`)}
       >
         <td className="items-center gap-4 py-5 first:pl-7">
           <div className="flex flex-col">
