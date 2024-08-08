@@ -6,9 +6,9 @@ export const HEADER_ETABLISHEMENTS_ROW = [
 ]
 
 export const HEADER_CLASSES_ROW = [
-  { title: "ID" },
-  { title: "Name" },
-  { title: "Students" },
+  { title: "Nom" },
+  { title: "Nom de l'établissement" },
+  { title: "Nombre d'éléves" },
   { title: "" }
 ]
 

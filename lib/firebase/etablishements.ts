@@ -16,7 +16,7 @@ export const getEtablishementById = async (id: string) => {
     )
     if (!etablishement.exists() || etablishement.data().deleted_at) return null
 
-    const classeList = await getClassesByEtablishement(id)
+    const classeList = await getClassesByEtablishementId(id)
 
     return {
       id: etablishement.id,
@@ -31,7 +31,7 @@ export const getEtablishementById = async (id: string) => {
 export const getEtablishementList = async (limits: number) => {
   try {
     let etablishements: any = []
-    console.log("ok")
+
     const q = await getDocs(
       query(
         collection(firestore, DB_ETABLISHEMENTS),
@@ -42,7 +42,7 @@ export const getEtablishementList = async (limits: number) => {
 
     for (const doc of q.docs) {
       if (!doc.data().deleted_at) {
-        const classesList = await getClassesByEtablishement(doc.id)
+        const classesList = await getClassesByEtablishementId(doc.id)
         etablishements.push({ id: doc.id, classes: classesList, ...doc.data() })
       }
     }
@@ -53,12 +53,12 @@ export const getEtablishementList = async (limits: number) => {
   }
 }
 
-const getClassesByEtablishement = async (id: string) => {
+export const getClassesByEtablishementId = async (id: string) => {
   try {
     const classes = await getDocs(
       query(
         collection(firestore, DB_CLASSES),
-        where("etablishement_id", "==", id)
+        where("etablishement.id", "==", id)
       )
     )
     return classes.docs.map((doc) => ({ id: doc.id, ...doc.data() }))

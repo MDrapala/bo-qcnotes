@@ -19,6 +19,7 @@ const Etablishements = () => {
 
   const loadEtablishements = async () => {
     const etablishementList = await getEtablishementList(1000)
+    console.log(etablishementList)
     setEtablishementsList(etablishementList)
   }
 
