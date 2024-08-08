@@ -1,3 +1,10 @@
+export const HEADER_ETABLISHEMENTS_ROW = [
+  { title: "Type d'établissement" },
+  { title: "Nom" },
+  { title: "Nombre de classes" },
+  { title: "" }
+]
+
 export const HEADER_CLASSES_ROW = [
   { title: "ID" },
   { title: "Name" },

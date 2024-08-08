@@ -3,12 +3,13 @@ import Rows from "@/components/Rows"
 import type { HeaderTable, RowProps } from "@/types/Table"
 
 type Props<T> = {
+  refresh: () => void
   header: HeaderTable[]
   rows: React.FC<RowProps<T>> | any
   dataT?: any
 }
 
-const Table = <T,>({ header, rows, dataT }: Props<T>) => {
+const Table = <T,>({ refresh, header, rows, dataT }: Props<T>) => {
   return (
     <div className="flex flex-col">
       <table className="table-auto rounded-t-lg bg-neutral-50">
@@ -29,6 +30,7 @@ const Table = <T,>({ header, rows, dataT }: Props<T>) => {
         </thead>
         <tbody className="bg-white">
           <Rows
+            refresh={refresh}
             dataT={dataT}
             ColumnNumber={header.length}
             RowComponent={rows}

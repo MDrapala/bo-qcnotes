@@ -15,6 +15,7 @@ export const FIREBASE_CONFIG = {
   measurementId
 }
 
+export const DB_ETABLISHEMENTS = "etablishements"
 export const DB_USERS = "users"
 export const DB_CLASSES = "classes"
 export const DB_QCNOTES = "qcnotes"
