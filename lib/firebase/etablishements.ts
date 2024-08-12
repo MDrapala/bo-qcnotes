@@ -1,6 +1,6 @@
 import { firestore } from "@/config/firebase"
-import { DB_CLASSES, DB_ETABLISHEMENTS } from "@/constants/firebase"
-import { addDoc, doc, getDocs, query, setDoc, where } from "firebase/firestore"
+import { DB_ETABLISHEMENTS } from "@/constants/firebase"
+import { addDoc, doc, getDocs, query, setDoc } from "firebase/firestore"
 import {
   DocumentSnapshot,
   getDoc,
@@ -8,6 +8,7 @@ import {
   orderBy,
   limit
 } from "firebase/firestore"
+import { getClassesByEtablishementId } from "./classes"
 
 export const getEtablishementById = async (id: string) => {
   try {
@@ -50,21 +51,6 @@ export const getEtablishementList = async (limits: number) => {
     return etablishements
   } catch (error) {
     console.error
-  }
-}
-
-export const getClassesByEtablishementId = async (id: string) => {
-  try {
-    const classes = await getDocs(
-      query(
-        collection(firestore, DB_CLASSES),
-        where("etablishement.id", "==", id)
-      )
-    )
-    return classes.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-  } catch (error) {
-    console.error
-    return null
   }
 }
 

@@ -1,5 +1,5 @@
 import { firestore } from "@/config/firebase"
-import { DB_CLASSES, DB_USERS } from "@/constants/firebase"
+import { DB_CLASSES } from "@/constants/firebase"
 import { addDoc, doc, getDocs, query, setDoc, where } from "firebase/firestore"
 import {
   DocumentSnapshot,
@@ -8,13 +8,14 @@ import {
   orderBy,
   limit
 } from "firebase/firestore"
+import { getStudentsByClasseId } from "./students"
 
 export const getClasseById = async (id: string) => {
   try {
     const classe: DocumentSnapshot = await getDoc(
       doc(firestore, DB_CLASSES, id)
     )
-    const studentList = await getStudentsByClass(id)
+    const studentList = await getStudentsByClasseId(id)
 
     return { id: classe.id, students: studentList, ...classe.data() }
   } catch (error) {
@@ -24,7 +25,7 @@ export const getClasseById = async (id: string) => {
 
 export const getClasseList = async (limits: number) => {
   try {
-    let user: any = []
+    let classes: any = []
     const q = await getDocs(
       query(
         collection(firestore, DB_CLASSES),
@@ -34,22 +35,29 @@ export const getClasseList = async (limits: number) => {
     )
 
     for (const doc of q.docs) {
-      const studentList = await getStudentsByClass(doc.id)
-      user.push({ id: doc.id, students: studentList, ...doc.data() })
+      if (!doc.data().deleted_at) {
+        const studentList = await getStudentsByClasseId(doc.id)
+        classes.push({ id: doc.id, students: studentList, ...doc.data() })
+      }
     }
 
-    return user
+    console.log(classes)
+
+    return classes
   } catch (error) {
     console.error
   }
 }
 
-const getStudentsByClass = async (id: string) => {
+export const getClassesByEtablishementId = async (id: string) => {
   try {
-    const student = await getDocs(
-      query(collection(firestore, DB_USERS), where("class_id", "==", id))
+    const classes = await getDocs(
+      query(
+        collection(firestore, DB_CLASSES),
+        where("etablishement.id", "==", id)
+      )
     )
-    return student.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+    return classes.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
   } catch (error) {
     console.error
     return null
@@ -67,6 +75,19 @@ export const addClasse = async (data: object) => {
 }
 
 export const updateClasse = async (
+  id: string,
+  data: object
+): Promise<boolean> => {
+  try {
+    await setDoc(doc(firestore, DB_CLASSES, id), data, { merge: true })
+    return true
+  } catch (error) {
+    console.error({ error })
+    return false
+  }
+}
+
+export const deleteClasse = async (
   id: string,
   data: object
 ): Promise<boolean> => {

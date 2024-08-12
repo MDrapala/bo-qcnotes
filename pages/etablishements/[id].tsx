@@ -11,13 +11,12 @@ import Table from "@/components/Tables"
 import { HEADER_CLASSES_ROW } from "@/constants/tables"
 import {
   deleteEtablishement,
-  getClassesByEtablishementId,
   getEtablishementById
 } from "@/lib/firebase/etablishements"
 
-import { useForm } from "react-hook-form"
 import ClassesRows from "@/components/Rows/classes"
 import CreateClasse from "@/pages/classes/modal/create"
+import { getClassesByEtablishementId } from "@/lib/firebase/classes"
 
 const EtablishementDetailsPage = () => {
   const router = useRouter()
@@ -27,12 +26,6 @@ const EtablishementDetailsPage = () => {
   const [openModalClasse, setOpenModalClasse] = useState<boolean>(false)
   const [etablishement, setEtablishement] = useState<any>()
   const [classeList, setClasseList] = useState<any>([])
-  const {
-    register,
-    reset,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({ defaultValues: etablishement })
 
   const metadata: Metadata = {
     title: `${etablishement?.name || ""}`
@@ -63,10 +56,6 @@ const EtablishementDetailsPage = () => {
       console.error(err)
     )
   }, [etablishementId])
-
-  // useEffect(() => {
-  //   reset(etablishement)
-  // }, [etablishement])
 
   return etablishement ? (
     <LayoutPage props={metadata}>

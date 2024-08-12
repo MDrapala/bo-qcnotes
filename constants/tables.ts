@@ -12,9 +12,8 @@ export const HEADER_CLASSES_ROW = [
   { title: "" }
 ]
 
-export const HEADER_CLASSES_STUDENTS_ROW = [
-  { title: "ID" },
-  { title: "Name" },
+export const HEADER_STUDENTS_ROW = [
+  { title: "Nom utilisateur" },
   { title: "Code" },
   { title: "" }
 ]

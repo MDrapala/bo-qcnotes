@@ -1,9 +1,39 @@
 import Trash from "@/assets/icons/Trash"
+import { toastNotification } from "@/components/toast"
+import { deleteClasse } from "@/lib/firebase/classes"
 import { useRouter } from "next/router"
 import { Fragment } from "react"
 
-const ClassesRows = ({ item }: { item: any }) => {
+interface Classe {
+  id: string
+  name: string
+  etablishement?: {
+    id?: string
+    name?: string
+  }
+  students?: any[]
+}
+
+const ClassesRows = ({ refresh, item }: { refresh: any; item: Classe }) => {
   const router = useRouter()
+
+  const removeClasse = async (id: string) => {
+    const remove = await deleteClasse(id, { deleted_at: new Date() })
+    if (!remove) {
+      toastNotification(
+        "Une erreur s'est produite lors de la suppréssion de la classe",
+        {
+          type: "error"
+        }
+      )
+    }
+
+    toastNotification(" La classe a bien été supprimé !", {
+      type: "success"
+    })
+
+    refresh()
+  }
 
   return (
     <Fragment>
@@ -19,7 +49,7 @@ const ClassesRows = ({ item }: { item: any }) => {
         <td className="items-center gap-4 py-5">
           <div className="flex flex-col">
             <p className="font-semibold  text-neutral-base">
-              {item?.etablishement.name}
+              {item?.etablishement?.name}
             </p>
           </div>
         </td>
@@ -31,7 +61,13 @@ const ClassesRows = ({ item }: { item: any }) => {
           </div>
         </td>
         <td className="items-center gap-4 py-5">
-          <div className="flex flex-col">
+          <div
+            className="flex flex-col"
+            onClick={(e) => {
+              e.stopPropagation()
+              removeClasse(item.id)
+            }}
+          >
             <p className="font-semibold  text-neutral-base">
               <Trash variant="medium" />
             </p>
