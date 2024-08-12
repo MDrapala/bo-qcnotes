@@ -13,8 +13,11 @@ export const HEADER_CLASSES_ROW = [
 ]
 
 export const HEADER_STUDENTS_ROW = [
-  { title: "Nom utilisateur" },
+  { title: "Nom" },
   { title: "Code" },
+  { title: "Classes" },
+  { title: "Établissements" },
+  { title: "Nombre de note" },
   { title: "" }
 ]
 

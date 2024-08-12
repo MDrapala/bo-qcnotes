@@ -8,7 +8,7 @@ import { toastNotification } from "@/components/toast"
 const formStudent = [
   {
     label: "Classes",
-    name: "name",
+    name: "classe.id",
     placeholder: "1SVT1",
     required: true,
     isSelected: true,
@@ -68,6 +68,10 @@ const CreateStudent = ({
         id: classe?.id || classeFilter.id,
         name: classe?.name || classeFilter.name
       },
+      etablishement: {
+        id: classe?.etablishement.id || classeFilter.etablishement.id,
+        name: classe?.etablishement.name || classeFilter.etablishement.name
+      },
       created_at: new Date()
     })
     if (student) {
@@ -123,7 +127,9 @@ const CreateStudent = ({
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   >
                     {classeList.map((s: any) => (
-                      <option value={s.id}>{s.name}</option>
+                      <option value={s.id}>
+                        {s?.etablishement?.name} - {s?.name}
+                      </option>
                     ))}
                   </select>
                 </div>

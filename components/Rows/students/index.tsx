@@ -24,6 +24,25 @@ const StudentRows = ({ item }: { item: any }) => {
         <td className="items-center gap-4 py-5">
           <div className="flex flex-col">
             <p className="font-semibold  text-neutral-base">
+              {item.classe.name}
+            </p>
+          </div>
+        </td>
+        <td className="items-center gap-4 py-5">
+          <div className="flex flex-col">
+            <p className="font-semibold  text-neutral-base">
+              {item.etablishement.name}
+            </p>
+          </div>
+        </td>
+        <td className="items-center gap-4 py-5">
+          <div className="flex flex-col">
+            <p className="font-semibold  text-neutral-base">{item.notes}</p>
+          </div>
+        </td>
+        <td className="items-center gap-4 py-5">
+          <div className="flex flex-col">
+            <p className="font-semibold  text-neutral-base">
               <Trash variant="medium" />
             </p>
           </div>

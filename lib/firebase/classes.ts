@@ -41,8 +41,6 @@ export const getClasseList = async (limits: number) => {
       }
     }
 
-    console.log(classes)
-
     return classes
   } catch (error) {
     console.error

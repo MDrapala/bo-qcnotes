@@ -3,6 +3,7 @@ import Stat from "@/assets/icons/Stat"
 import School from "@/assets/icons/School"
 import Organization from "@/assets/icons/Organization"
 import Ad from "@/assets/icons/Ad"
+import Member from "@/assets/icons/Member"
 
 export const AdminMenu: Array<Menu> = [
   {
@@ -25,6 +26,14 @@ export const AdminMenu: Array<Menu> = [
     name: "Classes",
     link: "/classes",
     icon: <School variant="large" />,
+    notification: {
+      count: 0
+    }
+  },
+  {
+    name: "Étudiants",
+    link: "/students",
+    icon: <Member variant="large" />,
     notification: {
       count: 0
     }
