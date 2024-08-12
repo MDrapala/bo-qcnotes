@@ -3,10 +3,12 @@ import { DB_STUDENTS } from "@/constants/firebase"
 import {
   addDoc,
   collection,
+  doc,
   getDocs,
   limit,
   orderBy,
   query,
+  setDoc,
   where
 } from "firebase/firestore"
 
@@ -48,6 +50,19 @@ export const getStudentsByClasseId = async (id: string) => {
 export const addStudent = async (data: object) => {
   try {
     await addDoc(collection(firestore, DB_STUDENTS), data)
+    return true
+  } catch (error) {
+    console.error({ error })
+    return false
+  }
+}
+
+export const deleteStudent = async (
+  id: string,
+  data: object
+): Promise<boolean> => {
+  try {
+    await setDoc(doc(firestore, DB_STUDENTS, id), data, { merge: true })
     return true
   } catch (error) {
     console.error({ error })

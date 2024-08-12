@@ -4,12 +4,13 @@ import { toastNotification } from "@/components/toast"
 import { deleteEtablishement } from "@/lib/firebase/etablishements"
 import { useRouter } from "next/router"
 import { Fragment } from "react"
+import { ClasseType } from "../classes"
 
-interface Etablishement {
+export interface EtablishementType {
   id: string
   name: string
   type: string
-  classes?: any[]
+  classes?: ClasseType[]
 }
 
 const EtablishementRows = ({
@@ -17,7 +18,7 @@ const EtablishementRows = ({
   item
 }: {
   refresh: any
-  item: Etablishement
+  item: EtablishementType
 }) => {
   const router = useRouter()
 

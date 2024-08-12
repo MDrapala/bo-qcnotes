@@ -3,18 +3,17 @@ import { toastNotification } from "@/components/toast"
 import { deleteClasse } from "@/lib/firebase/classes"
 import { useRouter } from "next/router"
 import { Fragment } from "react"
+import { StudentType } from "../students"
+import { EtablishementType } from "../etablishements"
 
-interface Classe {
+export interface ClasseType {
   id: string
   name: string
-  etablishement?: {
-    id?: string
-    name?: string
-  }
-  students?: any[]
+  etablishement?: EtablishementType
+  students?: StudentType[]
 }
 
-const ClassesRows = ({ refresh, item }: { refresh: any; item: Classe }) => {
+const ClassesRows = ({ refresh, item }: { refresh: any; item: ClasseType }) => {
   const router = useRouter()
 
   const removeClasse = async (id: string) => {

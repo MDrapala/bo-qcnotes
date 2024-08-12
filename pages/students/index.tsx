@@ -68,7 +68,6 @@ const StudentPage = () => {
             Ajouter un(e) étudiant(e)
           </Button>
         </div>
-
         <Table
           refresh={loadStudents}
           header={HEADER_STUDENTS_ROW}
