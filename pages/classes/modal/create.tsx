@@ -41,7 +41,7 @@ const CreateClasse = ({
   } = useForm()
 
   const onSubmit = async (data: any) => {
-    console.log(data)
+    console.log({ data, etablishement })
     const etablishementFilter = etablishementList.filter(
       (item: any) => item.id === data.etablishement.id
     )[0]
@@ -69,9 +69,8 @@ const CreateClasse = ({
   }
 
   useEffect(() => {
-    if (isNew) {
+    if (etablishement === undefined)
       loadEtablishements().catch((err) => console.error(err))
-    }
   }, [])
 
   return (
@@ -83,7 +82,6 @@ const CreateClasse = ({
       <div className="flex-col items-center mx-auto w-96">
         <h1 className="text-center text-neutral-base font-sans font-semibold text-base uppercase">
           <i>
-            {" "}
             {etablishement?.name &&
               `${etablishement?.type} - ${etablishement?.name}`}
           </i>
@@ -93,30 +91,42 @@ const CreateClasse = ({
         <div className="flex w-full items-center mt-8">
           <div className="grid grid-cols-1 w-full mb-5">
             {formClasse.map((item) =>
-              !item ? (
-                "Chargement"
-              ) : (
-                <div className={`mb-5 ${item.className}`}>
+              isNew && item.isSelected ? (
+                <div key={item.name} className={`mb-5 ${item.className}`}>
                   <label
                     htmlFor={item.name}
                     className="mb-3 block text-base font-medium text-[#07074D]"
                   >
-                    {item.label}{" "}
+                    {item.label}
                     {item.isPublic && "(sera pas affiché au éleves)"}
                     <span className="text-red-500">
                       {errors[item.name] && <span>This field is required</span>}
                     </span>
                   </label>
-                  {isNew && item.isSelected ? (
-                    <select
-                      {...register(item.name, { required: true })}
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  <select
+                    {...register(item.name, { required: true })}
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  >
+                    {etablishementList.map((s: any) => (
+                      <option value={s.id}>{s.name}</option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                !item.isSelected && (
+                  <div key={item.name} className={`mb-5 ${item.className}`}>
+                    <label
+                      htmlFor={item.name}
+                      className="mb-3 block text-base font-medium text-[#07074D]"
                     >
-                      {etablishementList.map((s: any) => (
-                        <option value={s.id}>{s.name}</option>
-                      ))}
-                    </select>
-                  ) : (
+                      {item.label}{" "}
+                      {item.isPublic && "(sera pas affiché au éleves)"}
+                      <span className="text-red-500">
+                        {errors[item.name] && (
+                          <span>This field is required</span>
+                        )}
+                      </span>
+                    </label>
                     <input
                       type="text"
                       id={item.name}
@@ -124,8 +134,8 @@ const CreateClasse = ({
                       {...register(item.name, { required: true })}
                       className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     />
-                  )}
-                </div>
+                  </div>
+                )
               )
             )}
             <button

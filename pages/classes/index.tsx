@@ -54,9 +54,10 @@ const ClassesPage = () => {
       <div className="w-full md:mx-12">
         <div className="md:mt-10 flex items-center gap-4">
           <BreadCrumbs url="/dashboard" name="home" active={false} />
-          <BreadCrumbs url="/classes" name="Classes" active={false} />
+          <BreadCrumbs url="/classes" name="classes" active={false} />
         </div>
-        <div className="flex justify-end my-12 w-full">
+        <div className="flex justify-between items-center mt-10 mb-5">
+          <h1 className="text-3xl font-bold">Mes classes</h1>
           <Button
             status="CREATE"
             variant="default"
@@ -66,6 +67,7 @@ const ClassesPage = () => {
             Créer une classe
           </Button>
         </div>
+
         <Table
           refresh={loadClasses}
           header={HEADER_CLASSES_ROW}
