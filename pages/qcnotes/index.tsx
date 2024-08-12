@@ -17,13 +17,13 @@ const QCNotes = () => {
   const router = useRouter()
   const [qcNotesList, setQCNotesList] = useState<any>([])
 
-  const loadClasses = async () => {
+  const loadQCNotes = async () => {
     const qcNotesList = await getQCNotesList(1000)
     setQCNotesList(qcNotesList)
   }
 
   useEffect(() => {
-    loadClasses().catch((err) => console.error(err))
+    loadQCNotes().catch((err) => console.error(err))
   }, [])
 
   return (
@@ -43,6 +43,7 @@ const QCNotes = () => {
           </Button>
         </div>
         <Table
+          refresh={loadQCNotes}
           header={HEADER_QCNOTES_ROW}
           rows={QCNotesRows}
           dataT={qcNotesList}

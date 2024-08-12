@@ -13,7 +13,7 @@ import StudentRows from "@/components/Rows/students"
 import { getStudentList } from "@/lib/firebase/students"
 
 const metadata: Metadata = {
-  title: "Students"
+  title: "Étudiants"
 }
 
 const StudentPage = () => {
