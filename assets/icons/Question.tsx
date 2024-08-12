@@ -1,7 +1,7 @@
 import { getVariantSize } from "@/utils/size"
 import { IconProps } from "@/types/Icons"
 
-const Calendar = ({
+const Question = ({
   variant,
   size,
   height,
@@ -17,21 +17,22 @@ const Calendar = ({
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      fill="none"
+      className="size-6"
       stroke="currentColor"
+      fill="none"
       height={heightSize}
       width={widthSize}
       {...props}
     >
       <path
-        d="M15.7 3V6.6M8.5 3V6.6M4 10.2H20.2M5.8 4.8H18.4C19.3941 4.8 20.2 5.60589 20.2 6.6V19.2C20.2 20.1941 19.3941 21 18.4 21H5.8C4.80589 21 4 20.1941 4 19.2V6.6C4 5.60589 4.80589 4.8 5.8 4.8Z"
-        stroke={color ? color : "#0F0F0F"}
-        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
+        stroke={color ? color : "#0F0F0F"}
+        strokeWidth="2"
+        d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"
       />
     </svg>
   )
 }
 
-export default Calendar
+export default Question

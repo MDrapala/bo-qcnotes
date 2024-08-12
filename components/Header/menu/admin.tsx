@@ -2,8 +2,9 @@ import { Menu } from "@/types/Default"
 import Stat from "@/assets/icons/Stat"
 import School from "@/assets/icons/School"
 import Organization from "@/assets/icons/Organization"
-import Ad from "@/assets/icons/Ad"
 import Member from "@/assets/icons/Member"
+import Question from "@/assets/icons/Question"
+import Calendar from "@/assets/icons/Calendar"
 
 export const AdminMenu: Array<Menu> = [
   {
@@ -41,7 +42,15 @@ export const AdminMenu: Array<Menu> = [
   {
     name: "QC notes",
     link: "/qcnotes",
-    icon: <Ad variant="large" />,
+    icon: <Question variant="large" />,
+    notification: {
+      count: 0
+    }
+  },
+  {
+    name: "Sorties",
+    link: "/events",
+    icon: <Calendar variant="large" />,
     notification: {
       count: 0
     }

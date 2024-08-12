@@ -21,5 +21,7 @@ export const DB_CLASSES = "classes"
 export const DB_STUDENTS = "students"
 
 export const DB_QCNOTES = "qcnotes"
+export const DB_EVENTS = "events"
+
 export const DB_QCNOTES_TESTS = "qcnotes-tests"
 export const DB_USERS = "users"

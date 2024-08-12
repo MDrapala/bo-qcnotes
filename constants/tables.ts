@@ -28,6 +28,15 @@ export const HEADER_QCNOTES_ROW = [
   { title: "" }
 ]
 
+export const HEADER_EVENTS_ROW = [
+  { title: "Nom" },
+  { title: "Code" },
+  { title: "Classes" },
+  { title: "Établissements" },
+  { title: "Nombre de note" },
+  { title: "" }
+]
+
 export const HEADER_QCNOTES_TESTS__ROW = [
   { title: "ID" },
   { title: "Date Start" },
