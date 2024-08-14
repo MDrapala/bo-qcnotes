@@ -50,63 +50,6 @@ const ClassDetailsPage = () => {
     loadStudentsByClasseId(classeId).catch((err) => console.error(err))
   }, [classeId])
 
-  // const [qcnotesList, setQCNotesList] = useState<any>([])
-  // const [qcnotesTestList, setQCNotesTestList] = useState<any>([])
-  // const [openModal, setOpenModal] = useState<boolean>(false)
-
-  // const [userCode, setUserCode] = useState<string>("")
-  // const {
-  //   register,
-  //   reset,
-  //   handleSubmit,
-  //   formState: { errors }
-  // } = useForm()
-
-  // const handleGenere = () => {
-  //   const code = Math.random().toString(36).substring(7).toString()
-  //   setUserCode(code)
-  // }
-
-  // const loadQCNotes = async () => {
-  //   const qcnotesList = await getQCNotesList(100)
-  //   setQCNotesList(qcnotesList)
-  // }
-  // const loadQCNotesTest = async () => {
-  //   const qcnotesList = await getQCNotesTestList(100)
-  //   setQCNotesTestList(qcnotesList)
-  // }
-
-  // const handleDeleteMedia = async () => {
-  //   if (
-  //     confirm("Are you sure you want to delete this classe into the database?")
-  //   ) {
-  //     toastNotification(`Media DELETED ${classe.id}`, {
-  //       type: "success"
-  //     })
-  //   }
-  // }
-
-  // const onSubmit = async (data: any) => {
-  //   const addStudent = await addUser({
-  //     ...data,
-  //     code: userCode,
-  //     class_id: classeId,
-  //     created_at: new Date()
-  //   })
-  //   if (addStudent) {
-  //     toastNotification("L'étudiant a été ajouté avec succèes", {
-  //       type: "success"
-  //     })
-  //     handleGenere()
-  //     reset()
-  //     getClasseList(classeId)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   loadQCNotesTest().catch((err) => console.error(err))
-  // }, [openModal])
-
   return classe ? (
     <LayoutPage props={metadata}>
       <div className="w-full md:mx-12">
@@ -172,17 +115,6 @@ const ClassDetailsPage = () => {
           />
         </div>
       </div>
-      {/* <ModalRender
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        className="animate-in slide-in-from-bottom flex justify-center absolute top-[25%] lg:w-[calc(100%-1000px)] md:w-[calc(100%-400px)] sm:w-[calc(100%-200px)] xs:w-full left-[35%] py-3 max-h-[1000px] bg-white rounded-md shadow-lg"
-      >
-        <QCNotesTests
-          qcnotesList={qcnotesList}
-          classId={classId}
-          setOpenModal={setOpenModal}
-        />
-      </ModalRender> */}
 
       <CreateStudent
         openModal={openModalStudent}

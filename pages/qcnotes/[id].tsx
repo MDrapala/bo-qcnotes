@@ -15,20 +15,27 @@ const metadata: Metadata = {
 
 const QCNotesDetails = () => {
   const router = useRouter()
-  const id = router.query.id
+  const id = router.query.id as string
 
   const [qcNotes, setQCNotes] = useState<any>()
   const { getValues, setValue, register, reset, watch, handleSubmit } =
     useForm()
-  const watchFields = watch()
-  const points = watchFields.questions
-    .map((question: any) => question.points)
-    .reduce((accumulator: number, current: number) => accumulator + current)
+
+  const metadata: Metadata = {
+    title: `QCNote - ${qcNotes?.title}`
+  }
 
   const getQCNotesList = async (id: string) => {
     const qcNotesList = await getQCNotesById(id)
     setQCNotes(qcNotesList)
   }
+
+  const watchFields = watch()
+  const points =
+    watchFields?.questions &&
+    watchFields.questions
+      .map((question: any) => question.points)
+      .reduce((accumulator: number, current: number) => accumulator + current)
 
   const onSubmit = async (data: any) => {
     if (points === watchFields?.note) {
@@ -48,9 +55,7 @@ const QCNotesDetails = () => {
   }
 
   useEffect(() => {
-    getQCNotesList(id as string).catch((error: TypeError) =>
-      console.error(error)
-    )
+    getQCNotesList(id).catch((error: TypeError) => console.error(error))
   }, [id])
 
   useEffect(() => {
@@ -61,6 +66,7 @@ const QCNotesDetails = () => {
       )
   }, [points])
 
+  console.log({ qcNotes })
   return qcNotes ? (
     <Layout props={metadata}>
       <div className="w-full md:mx-12">
