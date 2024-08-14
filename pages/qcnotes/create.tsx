@@ -8,7 +8,7 @@ import { toastNotification } from "@/components/toast"
 import { useRouter } from "next/router"
 
 const metadata: Metadata = {
-  title: "QC Notes"
+  title: "QCNotes"
 }
 
 const CreateQCNotes = () => {
@@ -93,10 +93,10 @@ const CreateQCNotes = () => {
       <div className="w-full md:mx-12">
         <div className="md:mt-10 flex items-center gap-4">
           <BreadCrumbs url="/" name="home" active={false} />
-          <BreadCrumbs url="/qcnotes" name="QC Notes" active={true} />
+          <BreadCrumbs url="/qcnotes" name="QCNotes" active={true} />
           <BreadCrumbs
             url="/qcnotes/create"
-            name="Créer un QC Notes"
+            name="Créer un QCNotes"
             active={false}
           />
         </div>
@@ -106,7 +106,7 @@ const CreateQCNotes = () => {
               htmlFor="title"
               className="mb-3 block text-base font-medium text-[#07074D]"
             >
-              Nom du QC Notes (ce titre sera affiché au étudiants)
+              Nom du QCNotes (ce titre sera affiché au étudiants)
               <span className="text-red-500">
                 {errors.title && <span>This field is required</span>}
               </span>
@@ -124,7 +124,7 @@ const CreateQCNotes = () => {
               htmlFor="note"
               className="mb-3 block text-base font-medium text-[#07074D]"
             >
-              Le QC Notes sera note sur ?
+              Le QCNotes sera sur ?
               <span className="text-red-500">
                 {errors.note && <span>This field is required</span>}
               </span>

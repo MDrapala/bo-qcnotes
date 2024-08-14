@@ -40,6 +40,6 @@ export const HEADER_EVENTS_ROW = [
 export const HEADER_QCNOTES_TESTS__ROW = [
   { title: "ID" },
   { title: "Date Start" },
-  { title: "ID QC Notes" },
+  { title: "ID QCNotes" },
   { title: "" }
 ]

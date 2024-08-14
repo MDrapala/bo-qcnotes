@@ -9,7 +9,7 @@ import Loading from "@/components/loading"
 import Layout from "@/pages"
 
 const metadata: Metadata = {
-  title: "QC Notes"
+  title: "QCNotes"
 }
 
 const QCNotesDetails = () => {
@@ -48,7 +48,7 @@ const QCNotesDetails = () => {
       <div className="w-full md:mx-12">
         <div className="md:mt-10 flex items-center gap-4">
           <BreadCrumbs url="/" name="home" active={false} />
-          <BreadCrumbs url="/qcnotes" name="QC Notes" active={true} />
+          <BreadCrumbs url="/qcnotes" name="QCNotes" active={true} />
           <BreadCrumbs
             url={`/qcnotes/${id}`}
             name={qcNotes?.title}

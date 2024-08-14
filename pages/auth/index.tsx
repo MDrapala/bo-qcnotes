@@ -27,7 +27,7 @@ const HomePage = () => {
             <div className="p-6 sm:p-16">
               <div className="text-center">
                 <h2 className="mb-8 text-2xl text-cyan-900 font-bold">
-                  QC Notes
+                  QCNotes
                 </h2>
               </div>
               <div className="mt-16 grid space-y-4">

@@ -40,7 +40,7 @@ export const AdminMenu: Array<Menu> = [
     }
   },
   {
-    name: "QC notes",
+    name: "QCNotes",
     link: "/qcnotes",
     icon: <Question variant="large" />,
     notification: {

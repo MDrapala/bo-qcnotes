@@ -37,7 +37,7 @@ const QCNotesTests = ({
     }
     const add = await addQCNotesTest(result)
     if (add) {
-      toastNotification("Le QC Notes a été ajouté avec succèes", {
+      toastNotification("Le QCNotes a été ajouté avec succèes", {
         type: "success"
       })
       setOpenModal(false)
@@ -48,7 +48,7 @@ const QCNotesTests = ({
   return (
     <div className="flex flex-col justify-center h-full">
       <h1 className="text-center text-neutral-base font-sans font-semibold text-base uppercase">
-        Nouveau QC Notes
+        Nouveau QCNotes
       </h1>
       <div className="mt-5 mx-8">
         <div className="mb-5">
@@ -95,7 +95,7 @@ const QCNotesTests = ({
           className="bg-green-500 hover:bg-green-600 rounded text-white px-3 w-full py-2"
           onClick={handleSubmit(onSubmit)}
         >
-          Lancer le QC Notes
+          Lancer le QCNotes
         </button>
       </div>
     </div>

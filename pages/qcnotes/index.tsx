@@ -10,7 +10,7 @@ import { getQCNotesList } from "@/lib/firebase/qcNotes"
 import { useRouter } from "next/router"
 
 const metadata: Metadata = {
-  title: "QC Notes"
+  title: "QCNotes"
 }
 
 const QCNotes = () => {
@@ -31,7 +31,7 @@ const QCNotes = () => {
       <div className="w-full md:mx-12">
         <div className="md:mt-10 flex items-center gap-4">
           <BreadCrumbs url="/" name="home" active={false} />
-          <BreadCrumbs url="/qcnotes" name="QC Notes" active={true} />
+          <BreadCrumbs url="/qcnotes" name="QCNotes" active={true} />
         </div>
         <div className="flex justify-end my-12 w-full">
           <Button
