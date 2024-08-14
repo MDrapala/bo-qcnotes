@@ -209,7 +209,7 @@ const CreateQCNotes = () => {
                 }
               >
                 <hr className="my-5" />
-                <div className="flex flex-row justify-between">
+                <div className="flex flex-row items-center justify-between">
                   <div className="flex flex-col w-full">
                     <label className="flex mb-2 w-full items-center justify-between">
                       <span className="flex items-center">
@@ -238,7 +238,7 @@ const CreateQCNotes = () => {
                       })}
                     />
                   </div>
-                  <div>
+                  <div className="w-full flex justify-end">
                     {questionIndex !== 0 && (
                       <Button
                         status="DELETE"
