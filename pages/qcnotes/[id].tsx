@@ -17,12 +17,12 @@ const QCNotesDetails = () => {
   const router = useRouter()
   const id = router.query.id as string
 
-  const [qcNotes, setQCNotes] = useState<any>()
+  const [qcNotes, setQCNotes] = useState<any>({})
   const { getValues, setValue, register, reset, watch, handleSubmit } =
     useForm()
 
   const metadata: Metadata = {
-    title: `QCNote - ${qcNotes?.title}`
+    title: `${qcNotes?.title}`
   }
 
   const getQCNotesList = async (id: string) => {
@@ -66,7 +66,11 @@ const QCNotesDetails = () => {
       )
   }, [points])
 
-  console.log({ qcNotes })
+  useEffect(() => {
+    console.log("ok")
+    reset(qcNotes)
+  }, [qcNotes])
+
   return qcNotes ? (
     <Layout props={metadata}>
       <div className="w-full md:mx-12">
