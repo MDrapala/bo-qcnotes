@@ -5,6 +5,7 @@ import { Fragment } from "react"
 const QCNotesRows = ({ item }: { item: any }) => {
   const router = useRouter()
 
+  console.log(item)
   return (
     <Fragment>
       <tr
@@ -19,7 +20,14 @@ const QCNotesRows = ({ item }: { item: any }) => {
         <td className="items-center gap-4 py-5">
           <div className="flex flex-col">
             <p className="font-semibold  text-neutral-base">
-              {item?.questions.length}
+              / {item?.note || 0}
+            </p>
+          </div>
+        </td>
+        <td className="items-center gap-4 py-5">
+          <div className="flex flex-col">
+            <p className="font-semibold  text-neutral-base">
+              {item?.questions.length || 0}
             </p>
           </div>
         </td>

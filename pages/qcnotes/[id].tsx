@@ -7,6 +7,7 @@ import { toastNotification } from "@/components/toast"
 import BreadCrumbs from "@/components/BreadCrumb"
 import Loading from "@/components/loading"
 import Layout from "@/pages"
+import { Button } from "@/components/Button"
 
 const metadata: Metadata = {
   title: "QCNotes"
@@ -15,22 +16,35 @@ const metadata: Metadata = {
 const QCNotesDetails = () => {
   const router = useRouter()
   const id = router.query.id
+
   const [qcNotes, setQCNotes] = useState<any>()
   const { getValues, setValue, register, reset, watch, handleSubmit } =
     useForm()
+  const watchFields = watch()
+  const points = watchFields.questions
+    .map((question: any) => question.points)
+    .reduce((accumulator: number, current: number) => accumulator + current)
+
   const getQCNotesList = async (id: string) => {
     const qcNotesList = await getQCNotesById(id)
     setQCNotes(qcNotesList)
   }
 
   const onSubmit = async (data: any) => {
-    const UpdateQCNotes = await updateQCNotesById(id as string, data)
-    if (UpdateQCNotes) {
-      toastNotification(`Mise à jour réussie de ${qcNotes.title}`, {
-        type: "success"
-      })
+    if (points === watchFields?.note) {
+      const UpdateQCNotes = await updateQCNotesById(id as string, data)
+      if (UpdateQCNotes) {
+        toastNotification(`Mise à jour réussie de ${qcNotes.title}`, {
+          type: "success"
+        })
+      }
+      getQCNotesList(id as string)
+    } else {
+      toastNotification(
+        `La somme des points ne peut correspond pas à ${watchFields?.note}`,
+        { type: "error" }
+      )
     }
-    getQCNotesList(id as string)
   }
 
   useEffect(() => {
@@ -40,8 +54,12 @@ const QCNotesDetails = () => {
   }, [id])
 
   useEffect(() => {
-    reset(qcNotes)
-  }, [qcNotes])
+    points > watchFields?.note &&
+      toastNotification(
+        `La somme des points ne peut pas dépasser ${watchFields?.note}`,
+        { type: "error" }
+      )
+  }, [points])
 
   return qcNotes ? (
     <Layout props={metadata}>
@@ -56,7 +74,9 @@ const QCNotesDetails = () => {
           />
         </div>
         <div className="flex flex-col bg-white border rounded-lg px-8 py-6 mx-auto my-8 w-full">
-          <h2 className="text-2xl font-medium mb-4">{qcNotes.title}</h2>
+          <h2 className="text-2xl font-medium mb-4">
+            {qcNotes.title} : Note ({points} / {watchFields?.note})
+          </h2>
           {getValues()?.questions?.map((question: any, keyQues: number) => (
             <div key={keyQues} className="mb-4">
               <label className="block text-gray-700 font-medium mb-2">
@@ -64,9 +84,11 @@ const QCNotesDetails = () => {
                 <input
                   type="number"
                   placeholder="10"
+                  min={0}
                   {...register(`questions[${keyQues}].points`, {
                     valueAsNumber: true,
-                    required: true
+                    required: true,
+                    min: 0
                   })}
                   className="w-14 rounded-md border border-[#e0e0e0] bg-white py-1 px-2 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />{" "}
@@ -103,12 +125,14 @@ const QCNotesDetails = () => {
             </div>
           ))}
           <div className="flex justify-between items-center">
-            <button
+            <Button
+              status="EDIT"
+              variant="default"
               onClick={handleSubmit(onSubmit)}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              className={`text-white bg-indigo-700 hover:bg-indigo-900`}
             >
               Mettre à jour
-            </button>
+            </Button>
             <span className="flex items-center gap-x-2 text-xl">
               Note sur{" "}
               <input
