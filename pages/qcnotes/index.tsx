@@ -33,21 +33,25 @@ const QCNotes = () => {
           <BreadCrumbs url="/" name="home" active={false} />
           <BreadCrumbs url="/qcnotes" name="QCNotes" active={true} />
         </div>
-        <div className="flex justify-end my-12 w-full">
+        <div className="flex justify-between items-center mt-10">
+          <h1 className="text-3xl font-bold">Mes QCNotes</h1>
           <Button
-            variant="default"
-            className="bg-blue-400 hover:bg-blue-600"
+            status="CREATE"
+            variant={"default"}
+            className="bg-indigo-400 hover:bg-indigo-600"
             onClick={() => router.push("/qcnotes/create")}
           >
             Créer un QCNote
           </Button>
         </div>
-        <Table
-          refresh={loadQCNotes}
-          header={HEADER_QCNOTES_ROW}
-          rows={QCNotesRows}
-          dataT={qcNotesList}
-        />
+        <div className="mt-10">
+          <Table
+            refresh={loadQCNotes}
+            header={HEADER_QCNOTES_ROW}
+            rows={QCNotesRows}
+            dataT={qcNotesList}
+          />
+        </div>
       </div>
     </Layout>
   )

@@ -22,8 +22,7 @@ export const HEADER_STUDENTS_ROW = [
 ]
 
 export const HEADER_QCNOTES_ROW = [
-  { title: "ID" },
-  { title: "Title" },
+  { title: "Nom" },
   { title: "Nombre de questions" },
   { title: "" }
 ]

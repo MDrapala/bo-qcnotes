@@ -13,11 +13,6 @@ const QCNotesRows = ({ item }: { item: any }) => {
       >
         <td className="items-center gap-4 py-5 first:pl-7">
           <div className="flex flex-col">
-            <p className="font-semibold  text-neutral-base">{item.id}</p>
-          </div>
-        </td>
-        <td className="items-center gap-4 py-5">
-          <div className="flex flex-col">
             <p className="font-semibold  text-neutral-base">{item.title}</p>
           </div>
         </td>

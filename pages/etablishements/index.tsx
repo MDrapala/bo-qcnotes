@@ -50,7 +50,7 @@ const Etablishements = () => {
         </div>
         <div className="mt-10">
           <Table
-            refresh={() => loadEtablishements()}
+            refresh={loadEtablishements}
             header={HEADER_ETABLISHEMENTS_ROW}
             rows={EtablishementRows}
             dataT={etablishementsList}
