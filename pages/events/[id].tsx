@@ -5,18 +5,16 @@ import { useForm } from "react-hook-form"
 import { toastNotification } from "@/components/toast"
 import { useRouter } from "next/router"
 import { Button } from "@/components/Button"
-import { getQCNotesList } from "@/lib/firebase/qcNotes"
 import { useEffect, useState } from "react"
-import { getClasseList } from "@/lib/firebase/classes"
 import FormSelect from "@/components/Inputs/select"
-import { addEvent } from "@/lib/firebase/events"
+import { getEventById, UpdateEvent } from "@/lib/firebase/events"
+import { getClasseList } from "@/lib/firebase/classes"
+import { getQCNotesList } from "@/lib/firebase/qcNotes"
 
-const metadata: Metadata = {
-  title: "Créer une sortie"
-}
-
-const CreateEvents = () => {
+const UpdateEvents = () => {
   const router = useRouter()
+  const eventId = router.query.id as string
+  const [event, setEvent] = useState<any>()
   const [classesList, setClassesList] = useState([])
   const [qcNotesList, setQCNotesList] = useState([])
   const {
@@ -25,34 +23,23 @@ const CreateEvents = () => {
     register,
     reset,
     watch,
-    getFieldState,
     handleSubmit,
     formState: { errors }
-  } = useForm<any>({
-    defaultValues: {
-      title: "",
-      groups: [
-        {
-          name: "",
-          classes: [],
-          qcnotes: []
-        }
-      ],
-      created_at: new Date()
-    }
-  })
+  } = useForm()
+
+  const metadata: Metadata = {
+    title: `${event?.title}`
+  }
+
   const watchFields = watch()
-  const points = watchFields.groups
-    .map((question: any) => question.points)
-    .reduce((accumulator: number, current: number) => accumulator + current)
 
   const addGroup = () => {
     setValue("groups", [
       ...getValues().groups,
       {
         name: "",
-        classes: "",
-        qcnotes: ""
+        classes: [],
+        qcnotes: []
       }
     ])
 
@@ -63,18 +50,23 @@ const CreateEvents = () => {
       }
     }, 100)
 
-    reset(getValues())
+    reset(watchFields)
   }
 
-  const removeGroup = (questionIndex: number) => {
-    const updatedQuestions = [...getValues().groups]
-    updatedQuestions.splice(questionIndex, 1)
-    setValue("groups", updatedQuestions)
-    reset(getValues())
+  const removeEvent = (questionIndex: number) => {
+    const updateEvents = [...watchFields.groups]
+    updateEvents.splice(questionIndex, 1)
+    setValue("groups", updateEvents)
+    reset(watchFields)
   }
 
   const onSubmit = async (data: any) => {
-    const events: any = await addEvent(data)
+    delete data.id
+
+    const events: any = await UpdateEvent(eventId as string, {
+      ...data,
+      updated_at: new Date()
+    })
     if (events) {
       toastNotification(`Création réussie de ${watchFields.title}`, {
         type: "success"
@@ -91,19 +83,20 @@ const CreateEvents = () => {
     const qcNotes = await getQCNotesList(1000)
     setQCNotesList(qcNotes)
   }
+  const loadEventsById = async (eventId: string) => {
+    const event = await getEventById(eventId)
+    setEvent(event)
+  }
 
   useEffect(() => {
+    loadEventsById(eventId).catch((err) => console.error(err))
     loadClasses().catch((err) => console.error(err))
     loadQCNotes().catch((err) => console.error(err))
-  }, [])
+  }, [eventId])
 
   useEffect(() => {
-    points > watchFields?.note &&
-      toastNotification(
-        `La somme des points ne peut pas dépasser ${watchFields?.note}`,
-        { type: "error" }
-      )
-  }, [points])
+    reset(event)
+  }, [event])
 
   return (
     <Layout props={metadata}>
@@ -112,8 +105,8 @@ const CreateEvents = () => {
           <BreadCrumbs url="/" name="home" active={false} />
           <BreadCrumbs url="/events" name="Événements" active={true} />
           <BreadCrumbs
-            url="/events/create"
-            name="Créer une sortie"
+            url={`/events/${eventId}`}
+            name="Mettre à jour une sortie"
             active={false}
           />
         </div>
@@ -145,17 +138,16 @@ const CreateEvents = () => {
               variant="default"
               onClick={addGroup}
               className={`bg-indigo-700 hover:bg-indigo-900`}
-              disabled={points >= watchFields?.note}
             >
               Nouveau groupe
             </Button>
             <Button
-              status="CREATE"
+              status="EDIT"
               variant="default"
               onClick={handleSubmit(onSubmit)}
               className="bg-indigo-700 hover:bg-indigo-900"
             >
-              Créer
+              Mettre à jour
             </Button>
             <Button
               status="SERVER_INDEX"
@@ -168,12 +160,12 @@ const CreateEvents = () => {
           </div>
         </div>
         <div className="flex flex-col">
-          {getValues()?.groups?.map((groupData: any, groupIndex: number) => (
+          {watchFields?.groups?.map((_: any, groupIndex: number) => (
             <div
               key={groupIndex}
               className="mb-8"
               id={
-                groupIndex === getValues().groups.length - 1
+                groupIndex === watchFields.groups.length - 1
                   ? "target-section"
                   : ""
               }
@@ -198,13 +190,22 @@ const CreateEvents = () => {
                     <FormSelect
                       label="Classes"
                       setValue={setValue}
-                      watch={watch}
+                      getValues={getValues}
                       stateRegister={`groups[${groupIndex}].classes`}
                       className="w-full mt-4"
+                      value={classesList.map(
+                        (classe: any) =>
+                          classe.id ===
+                            watchFields.groups[groupIndex].classes && {
+                            label: `[${classe.name}] ${classe.students.length} élèves - ${classe.etablishement.name}`,
+                            value: classe.id
+                          }
+                      )}
                       options={classesList.map((classe: any) => ({
                         label: `[${classe.name}] ${classe.students.length} élèves - ${classe.etablishement.name}`,
                         value: classe.id
                       }))}
+                      watch={watch}
                     />
                     <FormSelect
                       label="QCNotes"
@@ -212,6 +213,14 @@ const CreateEvents = () => {
                       setValue={setValue}
                       watch={watch}
                       className="w-full mt-4"
+                      value={qcNotesList.map(
+                        (QCNotes: any) =>
+                          QCNotes.id ===
+                            watchFields.groups[groupIndex].qcnotes && {
+                            label: `[${QCNotes.title}] questions: ${QCNotes.questions.length} - note: /${QCNotes.note}`,
+                            value: QCNotes.id
+                          }
+                      )}
                       options={qcNotesList.map((QCNotes: any) => ({
                         label: `[${QCNotes.title}] questions: ${QCNotes.questions.length} - note: /${QCNotes.note}`,
                         value: QCNotes.id
@@ -224,7 +233,7 @@ const CreateEvents = () => {
                     <Button
                       status="DELETE"
                       className="bg-red-500 text-white"
-                      onClick={() => removeGroup(groupIndex)}
+                      onClick={() => removeEvent(groupIndex)}
                     >
                       Supprimer le groupe
                     </Button>
@@ -239,4 +248,4 @@ const CreateEvents = () => {
   )
 }
 
-export default CreateEvents
+export default UpdateEvents

@@ -5,6 +5,9 @@ import { Button } from "@/components/Button"
 import { useEffect, useState } from "react"
 import { getEventList } from "@/lib/firebase/events"
 import { useRouter } from "next/router"
+import Table from "@/components/Tables"
+import { HEADER_EVENTS_ROW } from "@/constants/tables"
+import EventsRows from "@/components/Rows/events"
 
 const metadata: Metadata = {
   title: "Événements"
@@ -43,12 +46,12 @@ const Events = () => {
           </Button>
         </div>
         <div className="mt-10">
-          {/* <Table
+          <Table
             refresh={() => loadEvents()}
             header={HEADER_EVENTS_ROW}
-            rows={EventRows}
-            dataT={EventsList}
-          /> */}
+            rows={EventsRows}
+            dataT={eventsList}
+          />
         </div>
       </div>
     </Layout>

@@ -36,6 +36,7 @@ type SelectProps = {
   getValues?: any
   placeholder?: string
   value?: any
+  watch: any
   setValue: UseFormSetValue<any>
 }
 
@@ -58,33 +59,30 @@ const FormSelect = ({
   promiseOptions,
   defaultValue,
   setValue,
-  getValues,
   value,
   stateRegister,
-  placeholder
+  placeholder,
+  watch
 }: SelectProps) => {
   const handleChange = (event: any) => {
     let result: any = []
 
     if (isMulti) {
-      if (getValues()[stateRegister] === undefined) {
+      if (watch[stateRegister] === undefined) {
         setValue(
           stateRegister,
           event.map((item: any) => item.value)
         )
       }
 
-      if (event.length >= getValues()[stateRegister]?.length) {
+      if (event.length >= watch[stateRegister]?.length) {
         result = [
           ...new Set(
-            getValues()[stateRegister].concat(
-              event.map((item: any) => item.value)
-            )
+            watch[stateRegister].concat(event.map((item: any) => item.value))
           )
         ]
       } else {
-        console.log("event", event, getValues()["groups[0].classes"])
-        result = getValues()[stateRegister].filter((item: any) =>
+        result = watch[stateRegister].filter((item: any) =>
           event.map((item: any) => item.value).includes(item)
         )
       }
@@ -119,13 +117,7 @@ const FormSelect = ({
             control: () =>
               "h-[1.5px] overflow-auto  flex flex-start scrollbar-hide",
             dropdownIndicator: () => "sticky top-0 bottom-0",
-            // indicatorSeparator: () => "bg-green-500",
-            // valueContainer: () => "bg-blue-500",
             input: () => "border rounded"
-            // menu: () => "bg-teal-500",
-            // option: () => "bg-indigo-100",
-            // multiValueLabel: () => "bg-sky-500",
-            // multiValueRemove: () => "bg-rose-500"
           }}
           classNamePrefix="border-neutral-300 text-neutral-base bg-blue-500"
           defaultValue={defaultValue}

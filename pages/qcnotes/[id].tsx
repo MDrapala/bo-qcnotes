@@ -67,7 +67,6 @@ const QCNotesDetails = () => {
   }, [points])
 
   useEffect(() => {
-    console.log("ok")
     reset(qcNotes)
   }, [qcNotes])
 
