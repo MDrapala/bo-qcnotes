@@ -4,14 +4,16 @@ import BreadCrumbs from "@/components/BreadCrumb"
 import { Button } from "@/components/Button"
 import { useEffect, useState } from "react"
 import { getEventList } from "@/lib/firebase/events"
+import { useRouter } from "next/router"
 
 const metadata: Metadata = {
   title: "Événements"
 }
 
 const Events = () => {
+  const router = useRouter()
+
   const [eventsList, setEventsList] = useState<any[]>([])
-  const [openModal, setOpenModal] = useState<boolean>(false)
 
   const loadEvents = async () => {
     const eventList = await getEventList(1000)
@@ -35,7 +37,7 @@ const Events = () => {
             status="CREATE"
             variant={"default"}
             className="bg-indigo-400 hover:bg-indigo-600"
-            onClick={() => setOpenModal(true)}
+            onClick={() => router.push("/events/create")}
           >
             Créer une sortie
           </Button>
@@ -49,12 +51,6 @@ const Events = () => {
           /> */}
         </div>
       </div>
-
-      {/* <ModalCreateEvent
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        loadEvents={() => loadEvents()}
-      /> */}
     </Layout>
   )
 }

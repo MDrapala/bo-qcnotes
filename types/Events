@@ -1,0 +1,17 @@
+export interface Events {
+  name: string
+  description: string
+  createdAt: Date
+  updatedAt: Date
+  expirationDate: Date
+  Groups: Groups[]
+}
+
+export interface Groups {
+  name: string
+  classes: any[]
+  qcnote: any[]
+  startAt: Date
+  endAt: Date
+  createdAt: Date
+}
