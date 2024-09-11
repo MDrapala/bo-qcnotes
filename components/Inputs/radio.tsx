@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority"
 import { InputHTMLAttributes, useState } from "react"
-import { cn } from "@/utils/index"
+import { cn } from "@/utils/tailwindMerge"
 
 export type InputVariant = "default" | "outline" | "subtle" | "ghost"
 

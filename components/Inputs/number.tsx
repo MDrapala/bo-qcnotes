@@ -1,8 +1,9 @@
 import { cva } from "class-variance-authority"
 import { InputHTMLAttributes } from "react"
-import { cn } from "@/utils/index"
+
 import ChevronDown from "@/assets/icons/chevrons/ChevronDown"
 import ChevronUp from "@/assets/icons/chevrons/ChevronUp"
+import { cn } from "@/utils/tailwindMerge"
 
 export type InputVariant = "default" | "outline" | "subtle" | "ghost"
 
