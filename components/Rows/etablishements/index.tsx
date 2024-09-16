@@ -2,28 +2,21 @@ import Trash from "@/assets/icons/Trash"
 import Tag from "@/components/Tag"
 import { toastNotification } from "@/components/toast"
 import { deleteEtablishement } from "@/lib/firebase/etablishements"
+import { EtablishementWithId } from "@/types/firebase/Etablishement"
 import { useRouter } from "next/router"
 import { Fragment } from "react"
-import { ClasseType } from "../classes"
-
-export interface EtablishementType {
-  id: string
-  name: string
-  type: string
-  classes?: ClasseType[]
-}
 
 const EtablishementRows = ({
   refresh,
   item
 }: {
   refresh: any
-  item: EtablishementType
+  item: EtablishementWithId
 }) => {
   const router = useRouter()
 
   const removeEtablishement = async (id: string) => {
-    const remove = await deleteEtablishement(id, { deleted_at: new Date() })
+    const remove = await deleteEtablishement(id, { deletedAt: new Date() })
     if (!remove) {
       toastNotification(
         "Une erreur s'est produite lors de la suppréssion de l'établissement",

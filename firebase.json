@@ -18,10 +18,6 @@
         "destination": "/auth.html"
       },
       {
-        "source": "/dashboard",
-        "destination": "/dashboard.html"
-      },
-      {
         "source": "/classes",
         "destination": "/classes.html"
       },
@@ -30,12 +26,44 @@
         "destination": "/classes/*.html"
       },
       {
+        "source": "/dashboard",
+        "destination": "/dashboard.html"
+      },
+      {
+        "source": "/etablishements",
+        "destination": "/etablishements.html"
+      },
+      {
+        "source": "/etablishements/:id",
+        "destination": "/etablishements/*.html"
+      },
+      {
+        "source": "/events/create",
+        "destination": "/events/create.html"
+      },
+      {
+        "source": "/events",
+        "destination": "/events.html"
+      },
+      {
+        "source": "/events/:id",
+        "destination": "/events/*.html"
+      },
+      {
         "source": "/qcnotes",
         "destination": "/qcnotes.html"
       },
       {
+        "source": "/qcnotes/create",
+        "destination": "/qcnotes/create.html"
+      },
+      {
         "source": "/qcnotes/:id",
         "destination": "/qcnotes/*.html"
+      },
+      {
+        "source": "/students",
+        "destination": "/students.html"
       },
       {
         "source": "**",

@@ -1,4 +1,3 @@
-import { Metadata } from "next"
 import Layout from ".."
 import BreadCrumbs from "@/components/BreadCrumb"
 import Table from "@/components/Tables"
@@ -8,26 +7,39 @@ import { Button } from "@/components/Button"
 import ModalCreateEtablishement from "./modal/create"
 import { useEffect, useState } from "react"
 import { getEtablishementList } from "@/lib/firebase/etablishements"
+import { Metadata } from "next"
+import { EtablishementWithId } from "@/types/firebase/Etablishement"
+import { fetchRequest } from "@/lib/fetch"
+import Loading from "@/components/loading"
 
 const metadata: Metadata = {
-  title: "Établissements"
+  applicationName: "Établissements"
 }
 
 const Etablishements = () => {
-  const [etablishementsList, setEtablishementsList] = useState<any[]>([])
+  const [etablishementsList, setEtablishementsList] = useState<
+    EtablishementWithId[]
+  >([])
+  const [loading, setLoading] = useState<boolean>(false)
   const [openModal, setOpenModal] = useState<boolean>(false)
 
   const loadEtablishements = async () => {
-    const etablishementList = await getEtablishementList(1000)
-    setEtablishementsList(etablishementList)
+    const fetchResponse = await fetchRequest({
+      firebaseFunctions: () => getEtablishementList(10), // Fonction Firebase simulée
+      setLoading
+    })
+
+    if (fetchResponse) {
+      setEtablishementsList(fetchResponse) // Mettre à jour la liste si des données sont reçues
+    }
   }
 
   useEffect(() => {
-    loadEtablishements().catch((err) => console.error(err))
+    loadEtablishements()
   }, [])
 
   return (
-    <Layout props={metadata}>
+    <Layout metadata={metadata}>
       <div className="w-full md:mx-12">
         <div className="md:mt-10 flex items-center gap-4">
           <BreadCrumbs url="/" name="home" active={false} />
@@ -49,12 +61,16 @@ const Etablishements = () => {
           </Button>
         </div>
         <div className="mt-10">
-          <Table
-            refresh={loadEtablishements}
-            header={HEADER_ETABLISHEMENTS_ROW}
-            rows={EtablishementRows}
-            dataT={etablishementsList}
-          />
+          {loading ? (
+            <Loading />
+          ) : (
+            <Table
+              refresh={loadEtablishements}
+              header={HEADER_ETABLISHEMENTS_ROW}
+              rows={EtablishementRows}
+              dataT={etablishementsList}
+            />
+          )}
         </div>
       </div>
 

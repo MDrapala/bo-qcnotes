@@ -4,7 +4,7 @@ import { deleteClasse } from "@/lib/firebase/classes"
 import { useRouter } from "next/router"
 import { Fragment } from "react"
 import { StudentType } from "../students"
-import { EtablishementType } from "../etablishements"
+import { EtablishementType } from "@/types/firebase/Etablishement"
 
 export interface ClasseType {
   id: string

@@ -18,6 +18,7 @@ import {
   CategoryScale,
   LinearScale
 } from "chart.js"
+import Loading from "@/components/loading"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -55,7 +56,7 @@ const Dashboard = () => {
     loadQCNotesResponse().catch((e) => console.log(e))
   }, [])
 
-  if (!data) return <p>Loading...</p>
+  if (!data) return <Loading />
 
   // Process data for charts
   const chartData = {

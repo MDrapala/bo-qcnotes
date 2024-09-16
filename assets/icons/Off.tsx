@@ -1,5 +1,5 @@
-import { getVariantSize } from "@/utils/size"
 import { IconProps } from "@/types/Icons"
+import { getVariantSize } from "@/utils/size"
 
 const User = ({ variant, size, height, width, color, ...props }: IconProps) => {
   const variantSize = getVariantSize(variant)

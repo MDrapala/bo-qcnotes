@@ -1,6 +1,15 @@
 import { firestore } from "@/config/firebase"
 import { DB_CLASSES } from "@/constants/firebase"
-import { addDoc, doc, getDocs, query, setDoc, where } from "firebase/firestore"
+import {
+  addDoc,
+  doc,
+  DocumentData,
+  getDocs,
+  query,
+  QuerySnapshot,
+  setDoc,
+  where
+} from "firebase/firestore"
 import {
   DocumentSnapshot,
   getDoc,
@@ -9,6 +18,7 @@ import {
   limit
 } from "firebase/firestore"
 import { getStudentsByClasseId } from "./students"
+import { Classe, ClasseWithId } from "@/types/firebase/Classe"
 
 export const getClasseById = async (id: string) => {
   try {
@@ -47,18 +57,25 @@ export const getClasseList = async (limits: number) => {
   }
 }
 
-export const getClassesByEtablishementId = async (id: string) => {
+export const getClassesByEtablishementId = async (
+  id: string
+): Promise<ClasseWithId[]> => {
   try {
-    const classes = await getDocs(
+    const classeList: QuerySnapshot<DocumentData> = await getDocs(
       query(
         collection(firestore, DB_CLASSES),
         where("etablishement.id", "==", id)
       )
     )
-    return classes.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+
+    // Mapping des documents Firestore vers des objets de type ClasseWithId
+    return classeList.docs.map((doc) => ({
+      id: doc.id,
+      ...(doc.data() as Classe)
+    }))
   } catch (error) {
-    console.error
-    return null
+    console.error("Error fetching classes:", error)
+    throw new Error("Could not fetch classes")
   }
 }
 

@@ -9,6 +9,10 @@ import {
   limit
 } from "firebase/firestore"
 import { getClassesByEtablishementId } from "./classes"
+import {
+  Etablishement,
+  EtablishementWithId
+} from "@/types/firebase/Etablishement"
 
 export const getEtablishementById = async (id: string) => {
   try {
@@ -29,9 +33,11 @@ export const getEtablishementById = async (id: string) => {
   }
 }
 
-export const getEtablishementList = async (limits: number) => {
+export const getEtablishementList = async (
+  limits: number
+): Promise<EtablishementWithId[]> => {
   try {
-    let etablishements: any = []
+    let etablishements = []
 
     const q = await getDocs(
       query(
@@ -42,15 +48,21 @@ export const getEtablishementList = async (limits: number) => {
     )
 
     for (const doc of q.docs) {
-      if (!doc.data().deleted_at) {
+      if (!doc.data().deletedAt) {
         const classesList = await getClassesByEtablishementId(doc.id)
-        etablishements.push({ id: doc.id, classes: classesList, ...doc.data() })
+
+        etablishements.push({
+          id: doc.id,
+          ...(doc.data() as Etablishement),
+          classes: classesList
+        })
       }
     }
 
     return etablishements
   } catch (error) {
     console.error
+    throw new Error("Error while fetching etablishements")
   }
 }
 

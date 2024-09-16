@@ -1,17 +1,23 @@
 import Head from "next/head"
 import { Fragment, ReactNode } from "react"
 import Header from "@/components/Header"
+import { Metadata } from "next"
+import { APPLICATION_NAME } from "@/constants/default"
 
 type LayoutProps = {
-  props: any
   children: ReactNode
+  metadata: Metadata
 }
 
-const LayoutPage = ({ props, children }: LayoutProps) => {
+const LayoutPage = ({ children, metadata }: LayoutProps) => {
+  const defineMetadata = metadata || {
+    applicationName: APPLICATION_NAME
+  }
+
   return (
     <Fragment>
       <Head>
-        <title>{props?.title}</title>
+        <title>{defineMetadata.applicationName}</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"

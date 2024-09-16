@@ -8,13 +8,12 @@ import { Provider, useDispatch } from "react-redux"
 import { auth } from "@/config/firebase"
 import { createSession, revokeSession } from "@/redux/slices/session"
 import store from "@/redux/store"
-
-import "@/styles/globals.css"
-
+import Loading from "@/components/loading"
 import type { AppProps } from "next/app"
 import { getAdminByUid } from "@/lib/firebase/admins"
 import { IS_MOBILE_REGEX } from "@/constants/default"
-import Loading from "@/components/loading"
+import "@/styles/globals.css"
+
 Modal.setAppElement("#__next")
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -25,12 +24,14 @@ const App = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, async (currentUser) => {
       if (!currentUser) return router.push("/auth")
+
       const right = await getAdminByUid(currentUser.uid)
+
       if (!right) {
         dispatch(revokeSession())
         router.push("/dashboard")
-        return
       }
+
       dispatch(
         createSession({
           error: "",
